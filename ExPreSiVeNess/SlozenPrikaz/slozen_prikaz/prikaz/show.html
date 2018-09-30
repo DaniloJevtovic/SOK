@@ -1,0 +1,96 @@
+{% extends 'ExPreSiVeNessBase.html' %}
+{% block rendering_code %}
+
+mmp_view = new MinimapedView(d3.select('#main_view'), d3.select('#bird_view'));
+mmp_view.updateMainView(function(g) {
+	var nodes = d3.values(nodes_object);
+	
+	var tc_links = g
+		.selectAll('.link')
+		.data(links)
+		.enter()
+			.append('line')
+				.classed('link', true);
+	
+	var tc_items = g
+		.selectAll(".node")
+		.data(nodes)
+		.enter()
+			.append("g")
+				.classed("node", true)
+				.attr("id", function(d) { return d.name; })
+				/*.attr("data-toggle", "tooltip")
+				.attr("title", function(d) { return d.tekst;})*/;
+				
+	
+		
+	function iscrtajElement(d) {
+		var x_margin = 16;
+		var y_margin = 16;
+		var title_size = 22;
+		var text_size = 16;
+		var myG = d3.select('#' + d.name);
+		myG
+			.append('text')
+				.attr('x', x_margin)
+				.attr('fill', '#FF851B')
+				.attr('y', y_margin + title_size)
+				.classed('title', true)
+				.attr('font-size', title_size + 'px')
+				.text(d.naziv);
+		
+		for(var i = 0; i < d.atributi.length; i++)
+		myG
+			.append('text')
+				.attr('x', x_margin)
+				.attr('fill', '#FF851B')
+				.attr('y', function() { return 22 * i + 44 + y_margin;})
+				.attr('font-size', text_size + 'px')
+				.text(d.atributi[i].naziv + " : " + d.atributi[i].vrijednost);
+		//izracunavanje dimenzija okvira i crtanje
+		var max_width = 0;
+		d3.select('#' + d.name).selectAll('*').each(function(p, j) {
+			var width = this.getBBox().width;
+			if(width > max_width) {
+				max_width = width;
+			}
+		});
+		
+		myG
+			.insert('rect', '.title')
+				.attr('width', x_margin * 2 + max_width)
+				.attr('height', y_margin * 2 + d.atributi.length * 22 + 44)
+				.attr('fill', '#001F3F')
+				.attr('stroke', '#FF851B')
+				.attr('stroke-width', 2);
+	}
+	
+	g.selectAll('.node').each(function(d){iscrtajElement(d);});
+	
+	var simulation = d3.forceSimulation(nodes)
+		.force("charge", d3.forceManyBody().strength(-1000))
+		.force("center", d3.forceCenter())
+		.force("link", d3.forceLink(links).distance(200))
+		.force("collide", d3.forceCollide(50).iterations(5));
+		
+	simulation
+            .nodes(nodes)
+            .on("tick", function() {
+				tc_items
+					.attr("transform", function(d) { return "translate(" + d.x + ", " + d.y + ")"; });
+				
+				tc_links.attr('x1', function(d) { return d.source.x; })
+					.attr('y1', function(d) { return d.source.y; })
+					.attr('x2', function(d) { return d.target.x; })
+					.attr('y2', function(d) { return d.target.y; })
+					.attr('stroke-width', 2)
+					.attr('stroke', '#FF851B');
+			})
+			.on("end", function() {
+				mmp_view.initializeMinimap(); 
+				
+			});
+	
+});
+
+{% endblock rendering_code %}

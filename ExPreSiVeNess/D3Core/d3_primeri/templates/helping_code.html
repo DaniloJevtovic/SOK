@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+/*
+        d3.select("#main_view")
+            .call(d3.behavior.zoom().on("zoom", function() {
+                //pretpostavka je da je BoundingClientRect uvijek veci od BoundingBox-a
+                var mw_bcr = document.getElementById('main_view').getBoundingClientRect();
+                var mw_tcbb = document.getElementById('main_view_top_container').getBBox();
+
+				//Scale ide od 0 (beskonacno udaljeno) do inf (beskonacno ublizeno)
+				//Mora se ograniciti ispred 0 da se sadrzaj ne bi smanjio ispod velicine ekrana
+				//KolicinaSkaliranja = >( TrazenoSkaliranje, <(MinimalnoSkaliranjePoSirini, MinimalnoSkaliranjePoVisini) )
+                //var min_scale = greater( mw_bcr.width / (mw_tcbb.width * 0.98), mw_bcr.height / (mw_tcbb.height * 0.98));
+				var min_scale = greater( mw_bcr.width / mw_tcbb.width, mw_bcr.height / mw_tcbb.height);
+				var actual_scale = greater(min_scale, d3.event.scale);
+
+				//Sracunju se polozaj i dimenzije skaliranog sadrzaja
+				var scaled_instance = {
+                    x : mw_tcbb.x * actual_scale,
+                    y : mw_tcbb.y * actual_scale,
+                    width  : mw_tcbb.width * actual_scale,
+                    height : mw_tcbb.height * actual_scale
+                };
+
+				console.log('Scaled instance');
+                console.log(scaled_instance);
+
+
+				//Sracunju se granice translacije
+				var translation_bounds = {
+					max_left : scaled_instance.x + scaled_instance.width - mw_bcr.width,
+					max_right : -scaled_instance.x,
+					max_up : scaled_instance.y + scaled_instance.height - mw_bcr.height,
+					max_down : -scaled_instance.y
+				};
+
+				console.log('Translation bounds');
+                console.log(translation_bounds);
+
+
+				var translate_x = d3.event.translate[0];
+				translate_x = clamp_translation(
+					translate_x,
+					translation_bounds.max_left,
+					translation_bounds.max_right
+				);
+				var translate_y = d3.event.translate[1];
+				translate_y = clamp_translation(
+					translate_y,
+					translation_bounds.max_up,
+					translation_bounds.max_down
+				);
+				var actual_translation = [translate_x, translate_y];
+
+				/*
+				Vrijednost transform atributa - prvo transliranje pa skaliranje:
+				"scale(" + actual_scale + ")" + " translate(" + actual_translation + ")"
+
+				d3.select("#main_view")
+                    .select("g")
+                    .attr("transform",  "translate(" + actual_translation + ") scale(" + actual_scale + ")");
+            }))
+
+        ;*/
+
+         /*var svg = d3.select("#main_view")
+            .call(d3.behavior.zoom().on("zoom", function () {
+             //console.log(d3.event);
+            svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+        }));*/
+        /*
+        <rect height="40" width="80" x="20" y="20" stroke="blue" fill="yellow"></rect>
+                        <rect height="40" width="80" x="120" y="20" stroke="blue" fill="yellow"></rect>
+                        <rect height="40" width="80" x="20" y="80" stroke="blue" fill="yellow"></rect>
+                        <rect height="40" width="80" x="120" y="80" stroke="blue" fill="yellow"></rect>
+        svg.append("circle")
+            .attr("cx", 100)
+            .attr("cy", 100)
+            .attr("r", 50)
+            .style("fill", "#B8DEE6");
+        */
+</script>
+</body>
+</html>
+
+/*
+        var nodes={
+            {% for p in prodavnice %}
+               "prodavnica_{{p.id}}":{name:"prodavnica_{{p.id}}",naziv:"{{p.naziv}}",kategorije:[] },
+            {% endfor %}
+            {% for a in artikli %}
+               "artikal_{{a.id}}":{name:"artikal_{{a.id}}",naziv:"{{a.naziv}}",
+               {% if a.kategorije.all %}
+                   kategorije:[
+                    {% for k in a.kategorije.all %}
+                       {name:"kategorija_{{k.id}}",naziv:"{{k.naziv}}" },
+                    {% endfor %}
+                    ]
+                {% endif %}
+
+                },
+            {% endfor %}
+            };
+
+    var links=[
+    {% for p in prodavnice %}
+       {% for a in p.artikli.all %}
+          {source:"prodavnica_{{p.id}}",target:"artikal_{{a.id}}"},
+       {% endfor %}
+    {% endfor %}
+    ];
+
+    */

@@ -1,0 +1,11 @@
+setup.py
+ExPreSiVeNess_JednostavanPrikaz.egg-info/PKG-INFO
+ExPreSiVeNess_JednostavanPrikaz.egg-info/SOURCES.txt
+ExPreSiVeNess_JednostavanPrikaz.egg-info/dependency_links.txt
+ExPreSiVeNess_JednostavanPrikaz.egg-info/entry_points.txt
+ExPreSiVeNess_JednostavanPrikaz.egg-info/not-zip-safe
+ExPreSiVeNess_JednostavanPrikaz.egg-info/requires.txt
+ExPreSiVeNess_JednostavanPrikaz.egg-info/top_level.txt
+jednostavan_prikaz1/__init__.py
+jednostavan_prikaz1/jednostavan1/__init__.py
+jednostavan_prikaz1/jednostavan1/jednostavan.py

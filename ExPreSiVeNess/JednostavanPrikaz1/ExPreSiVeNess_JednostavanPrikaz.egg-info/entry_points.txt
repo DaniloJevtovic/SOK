@@ -1,0 +1,3 @@
+[ExPreSiVeNess.prikazati]
+jednostavan = jednostavan_prikaz1.jednostavan1.jednostavan:JednostavanPrikaz1
+

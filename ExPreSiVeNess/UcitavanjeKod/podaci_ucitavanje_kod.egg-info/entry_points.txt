@@ -1,0 +1,3 @@
+[ExPreSiVeNess.ucitati]
+ucitavanje_kod = ucitavanje.kod.ucitavanje_kod:UcitatiPodatkeKod
+
